@@ -1,6 +1,6 @@
 spring:
   profiles:
-    active: local
+    active: @activeSpringProfile@
 ---
 spring:
   profiles: local
@@ -54,7 +54,7 @@ spring:
     name: fsd-payment
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:33060/fsd_payment?useSSL=true&useUnicode=true&characterEncoding=utf-8
+    url: jdbc:mysql://172.17.0.1:33060/fsd_payment?useSSL=true&useUnicode=true&characterEncoding=utf-8
     username: fsd_payment_admin
     password: zaq12wsx
   jpa:
@@ -62,18 +62,18 @@ spring:
       hibernate:
         hbm2ddl:
           auto: update
-          
 server:
   servlet:
     context-path: /payment
   port: 9005
-  
+
 eureka:
   client:
     service-url:
-      defaultZone: http://fsd-registry:8081/eureka
+      defaultZone: http://172.17.0.1:8081/eureka
   instance:
     prefer-ip-address: true
+    ipAddress: 172.17.0.1
     instance-id: ${spring.application.name}:${server.port}
 
 # 服务管理配置
@@ -82,7 +82,7 @@ management:
     web:
       exposure:
         include: "*"        #暴漏的接口，"*"表示所有web监控接口
-#        exclude:            #不暴漏的接口
+      #        exclude:            #不暴漏的接口
       base-path: /actuator  #监控根路径
     enabled-by-default: true
   endpoint:
@@ -90,4 +90,6 @@ management:
       show-details: ALWAYS
 
 swagger.enabled: true
+logging:
+  config: classpath:logback-boot_dev.xml
 
