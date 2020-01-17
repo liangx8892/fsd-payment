@@ -54,7 +54,7 @@ spring:
     name: fsd-payment
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://172.17.0.1:33060/fsd_payment?useSSL=true&useUnicode=true&characterEncoding=utf-8
+    url: jdbc:mysql://mysql:3306/fsd_payment?useSSL=true&useUnicode=true&characterEncoding=utf-8
     username: fsd_payment_admin
     password: zaq12wsx
   jpa:
@@ -65,15 +65,13 @@ spring:
 server:
   servlet:
     context-path: /payment
-  port: 9005
+  port: 8080
 
 eureka:
   client:
     service-url:
-      defaultZone: http://172.17.0.1:8081/eureka
+      defaultZone: http://fsd-registry:8080/eureka
   instance:
-    prefer-ip-address: true
-    ipAddress: 172.17.0.1
     instance-id: ${spring.application.name}:${server.port}
 
 # 服务管理配置
